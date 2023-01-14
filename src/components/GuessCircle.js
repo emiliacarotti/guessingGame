@@ -1,0 +1,202 @@
+import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import ReactDOM from 'react-dom/client';
+
+export default function GuessCircle({
+    setHeader1, setHeader2, guess, setGuess,
+    number, difference, setDifference, guessCount, setGuessCount,
+    n, setN, colorToSetTo, setColorToSetTo,
+    setColor1, setColor2, setColor3, setColor4, setColor5,
+    num1, setNum1,
+    num2, setNum2,
+    num3, setNum3,
+    num4, setNum4,
+    num5, setNum5 }) {
+
+    // used to separate initial vs non initial renders for useEffect initial runs.
+    const initialRender2 = useRef(true);
+    const initialRender3 = useRef(true);
+    const initialRender4 = useRef(true);
+
+    // to trigger hide input field tag once game is over.
+    const [gameOver, setGameOver] = useState(false)
+
+    const [checkGuessTrigger, setCheckGuessTrigger] = useState(0)
+
+    // set guess to input as it's typed (changed).
+    const handleChange = (e) => {
+        setGuess(e.target.value)
+    }
+
+    // on submit:
+    // 1. check if guess contains letters/special characters, was previously guessed, or is out of range
+    //    if not then continue, else end.
+    // 2. if continue, difference (between guess and secret number) state is updated.
+    // 3. clear input field regardless.
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        var letters = /^[A-Za-z]+$/;
+        var chars = /^[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/
+
+        if (!guess) {
+            setHeader1("You haven't guessed anything.")
+            setHeader2("Try guessing a number between 0 and 100!")
+
+        } else {
+            if (guess.match(letters) || guess.match(chars) || guess == "-0" || guess < 0 || guess > 100) {
+                setHeader1("That's not a valid guess.")
+                setHeader2("Try guessing a number between 0 and 100!")
+
+            } else {
+                if (guess == num1 || guess == num2 || guess == num3 || guess == num4) {
+                    setHeader1("You've already guessed that.")
+                    setHeader2("Try guessing a different number!")
+
+                } else {
+                    setDifference(Math.abs(number - guess))
+                    setCheckGuessTrigger((prev) => prev + 1)
+                    if (guess != 0) {
+                        setGuess(parseInt(guess, 10))
+                    } else {
+                        setGuess(0)
+                    }
+                }
+            }
+        }
+        e.target.reset();
+    }
+
+    // useEffect triggers CheckGuess() function when difference state is changed.
+    // initialRender variables prevent it from running on initial page load.
+    useEffect(() => {
+        if (initialRender2.current) {
+            initialRender2.current = false;
+        } else {
+            CheckGuess();
+        }
+    }, [checkGuessTrigger]);
+
+    // useEffect sets previous guess circle colors when guessCount state is changed (in CheckGuess() fxn).
+    // circle # is determined by checking against n, which begins at 1 and increases after every submit (guess state update).
+    // React lags slightly so n still renders as 1 even though this useEffect triggers after guess is updated.
+    // after the circle's color is correctly set, check if the game is over in the following condition:
+    // guessCount = 5 AND the last guess was incorrect (tell user secret number).
+    // need to put the ` '' + guess ` in each statement or it doesn't update on time if you just do setGuess('' + guess)
+    useEffect(() => {
+        if (initialRender3.current) {
+            initialRender3.current = false;
+        } else {
+            if (n == 1) {
+                setColor1(colorToSetTo)
+                setNum1(guess)
+            } else if (n == 2) {
+                setColor2(colorToSetTo)
+                setNum2(guess)
+            } else if (n == 3) {
+                setColor3(colorToSetTo)
+                setNum3(guess)
+            } else if (n == 4) {
+                setColor4(colorToSetTo)
+                setNum4(guess)
+            } else if (n == 5) {
+                setColor5(colorToSetTo)
+                setNum5(guess)
+            }
+            setN((prev) => prev + 1)
+        }
+
+        if (guessCount == 5 && guess != number) {
+            console.log('from inside useeffect')
+            setHeader1("GAME OVER. The winning number was " + number + ".")
+            setHeader2("Reset the game to play again!")
+            setGameOver(true)
+        }
+
+        setGuess(undefined)
+
+    }, [guessCount]);
+
+    // CheckGuess() fxn runs after difference state updates
+    // 1. check if guess is undefined (no guess made)
+    // 2. check if guess is invalid (outside 0 to 100) - this was 
+    function CheckGuess() {
+        if (guess == number) { // CORRECT
+            setHeader1("Congrats! That's the right number!")
+            setHeader2("Reset the game to play again!")
+            setColorToSetTo("correct")
+            setGuessCount((prev) => prev + 1)
+            setGameOver(true)
+
+        } else if (difference <= 10) { // HOT
+            setHeader1("You're burning up!")
+            if (number < guess) {
+                setHeader2("Guess lower!")
+            } else {
+                setHeader2("Guess higher!")
+            }
+            setColorToSetTo("hot")
+            setGuessCount((prev) => prev + 1)
+
+        } else if (10 < difference && difference <= 20) { // WARM
+            setHeader1("You're pretty warm...")
+            if (number < guess) {
+                setHeader2("Guess lower!")
+            } else {
+                setHeader2("Guess higher!")
+            }
+            setColorToSetTo("warm")
+            setGuessCount((prev) => prev + 1)
+
+        } else if (20 < difference && difference <= 30) { // LUKEWARM
+            setHeader1("You're lukewarm.")
+            if (number < guess) {
+                setHeader2("Guess lower!")
+            } else {
+                setHeader2("Guess higher!")
+            }
+            setColorToSetTo("lukewarm")
+            setGuessCount((prev) => prev + 1)
+
+        } else if (30 < difference && difference <= 40) { // CHILLY
+            setHeader1("You're chilly!")
+            if (number < guess) {
+                setHeader2("Guess lower!")
+            } else {
+                setHeader2("Guess higher!")
+            }
+            setColorToSetTo("chilly")
+            setGuessCount((prev) => prev + 1)
+
+        } else if (difference > 40) { // ICE COLD
+            setHeader1("You're ice cold!")
+            if (number < guess) {
+                setHeader2("Guess lower!")
+            } else {
+                setHeader2("Guess higher!")
+            }
+            setColorToSetTo("iceCold")
+            setGuessCount((prev) => prev + 1)
+        }
+    }
+
+    return (
+        <>
+            <div id="guessCircle">
+                <form id="form"
+                    onSubmit={handleSubmit}>
+                    {!gameOver ? <>
+                        <input type='text'
+                            id="input"
+                            autoComplete="off"
+                            placeholder="enter guess here"
+                            onChange={handleChange}>
+                        </input>
+                        <input type="submit" value="SUBMIT" id="resetButton" /></>
+                        : ""}
+                </form>
+
+            </div>
+        </>
+    )
+}

@@ -1,0 +1,210 @@
+/* Write your CSS code in this file */
+
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+
+body{
+    background: #eee;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#text1{
+    font-size: 50px;
+    text-align: center;
+}
+
+#text2{
+    display: flex;
+    flex-direction: column;
+    margin-top: 0px;
+    font-size: 25px;
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#guessCircle{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid black;
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    box-shadow: 0px 0px 15px rgb(54, 54, 54);
+}
+
+#form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#input{
+    background-color: #eee;
+    height: 30px;
+    width: 165px;
+    margin: 7px;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Josefin Sans', sans-serif;
+    text-align: center;
+    font-size: 20px;
+    margin-top: 50px;
+    outline: none !important;
+}
+
+#goButton{
+    width: 40px;
+    height: 30px;
+    border-radius: 25%;
+    box-shadow: 0 2px 5px -2px black;
+    font-family: 'Josefin Sans', sans-serif;
+    margin-top: 20px;
+    text-align: center;
+    padding-top: 4px;
+}
+
+#pastGuesses{
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+}
+
+.pastGuess{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 3px solid black;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    margin: 10px;
+    box-shadow: 0px 0px 8px rgb(54, 54, 54);
+}
+
+#guess{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-grow: 1;
+    font-size: 40px;
+    padding-top: 10px;
+}
+
+footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+}
+
+#resetCircle{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#resetButton{
+    width: 65px;
+    height: 30px;
+    border-radius: 25%;
+    box-shadow: 0 2px 5px -2px black;
+    font-family: 'Josefin Sans', sans-serif;
+    margin-top: 20px;
+    padding-top: 4px;
+}
+
+#hintCircle{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#hintButton{
+    width: 65px;
+    height: 30px;
+    border-radius: 25%;
+    box-shadow: 0 2px 5px -2px black;
+    font-family: 'Josefin Sans', sans-serif;
+    margin-top: 20px;
+    padding-top: 4px;
+}
+
+.correct{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 50%;
+    width: 86px;
+    height: 75px;
+    box-shadow: 0px 0px 30px rgb(31, 173, 2);
+}
+
+.hot{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 50%;
+    width: 86px;
+    height: 75px;
+    box-shadow: 0px 0px 30px rgb(206, 1, 1);
+}
+
+.warm{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 50%;
+    width: 86px;
+    height: 75px;
+    box-shadow: 0px 0px 30px rgb(223, 90, 1);
+}
+
+.lukewarm{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 50%;
+    width: 86px;
+    height: 75px;
+    box-shadow: 0px 0px 30px rgb(252, 219, 31); 
+}
+
+.chilly{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 50%;
+    width: 86px;
+    height: 75px;
+    box-shadow: 0px 0px 30px rgb(35, 215, 247);
+}
+
+
+.iceCold{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 50%;
+    width: 86px;
+    height: 75px;
+    box-shadow: 0px 0px 30px rgb(1, 5, 223);
+}
